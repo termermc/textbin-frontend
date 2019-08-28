@@ -1,0 +1,219 @@
+{
+  "fonts": [
+    {
+      "name": "Broadway KB",
+      "author": "myflix"
+    },
+    {
+      "name": "Big Money-nw",
+      "author": "Nathan Bloomfield"
+    },
+    {
+      "name": "Cola",
+      "author": "MikeChat",
+      "hidden": true
+    },
+    {
+      "name": "Computer",
+      "author": "Mike Rosulek"
+    },
+    {
+      "name": "Contessa",
+      "author": "Christopher Joseph Pirillo"
+    },
+    {
+      "name": "Cricket",
+      "author": "Leslie Bates"
+    },
+    {
+      "name": "Cybermedium",
+      "author": "Kent Nassen",
+      "numbers": false
+    },
+    {
+      "name": "Cyberlarge",
+      "author": "Kent Nassen",
+      "numbers": false,
+      "hidden": true
+    },
+    {
+      "name": "Doom",
+      "author": "Frans P. de Vries"
+    },
+    {
+      "name": "Double",
+      "author": "Kent Nassen",
+      "numbers": false
+    },
+    {
+      "name": "Line Blocks",
+      "author": "Bateau"
+    },
+    {
+      "name": "Fire Font-k",
+      "author": "MJP"
+    },
+    {
+      "name": "Ghost",
+      "author": "myflix"
+    },
+    {
+      "name": "Isometric2",
+      "author": "Kent Nassen",
+      "numbers": false
+    },
+    {
+      "name": "Larry 3D",
+      "author": "Larry Gelberg"
+    },
+    {
+      "name": "3D-ASCII",
+      "author": "?"
+    },
+    {
+      "name": "Lean",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Mini",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Modular",
+      "author": "MJP"
+    },
+    {
+      "name": "Nancyj",
+      "author": "Eamon Daly"
+    },
+    {
+      "name": "Pawp",
+      "author": "Curtis Wanner"
+    },
+    {
+      "name": "Pebbles",
+      "author": "Ryan Youck"
+    },
+    {
+      "name": "Pepper",
+      "author": "Juan Car"
+    },
+    {
+      "name": "Poison",
+      "author": "Vinney Thai"
+    },
+    {
+      "name": "Puffy",
+      "author": "Juan Car"
+    },
+    {
+      "name": "Rectangles",
+      "author": "David Villegas"
+    },
+    {
+      "name": "Rounded",
+      "author": "Nick Miners"
+    },
+    {
+      "name": "Script",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Small Script",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Serifcap",
+      "author": "Bruce M. Binder"
+    },
+    {
+      "name": "Soft",
+      "author": "myflix"
+    },
+
+    {
+      "name": "Shadow",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Small Shadow",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Slant",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Small Slant",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Speed",
+      "author": "Claude Martins"
+    },
+    {
+      "name": "Stampatello",
+      "author": "Marco Bodrato"
+    },
+    {
+      "name": "Standard",
+      "author": "Glenn Chappell & Ian Chai"
+    },
+    {
+      "name": "Small",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Star Wars",
+      "author": "Ryan Youck"
+    },
+    {
+      "name": "Stop",
+      "author": "David Walton"
+    },
+    {
+      "name": "Straight",
+      "author": "Bas Meijer"
+    },
+    {
+      "name": "Thick",
+      "author": "Randall Ransom"
+    },
+    {
+      "name": "Thin",
+      "author": "Wendell Hicken"
+    },
+    {
+      "name": "Three Point",
+      "author": "Randall Ransom"
+    },
+    {
+      "name": "Tinker-Toy",
+      "author": "Wendell Hicken"
+    },
+    {
+      "name": "Wavy",
+      "author": "Brian Krog"
+    },
+    {
+      "name": "Weird",
+      "author": "Bas Meijer"
+    },
+    {
+      "name": "Univers",
+      "author": "Glenn Chappell"
+    },
+    {
+      "name": "Colossal",
+      "author": "Jonathon"
+    },
+    {
+      "name": "3D Diagonal",
+      "author": "nabis, LG Beard, Markus Gebhard and others"
+    },
+    {
+      "name": "Doh",
+      "author": "Curtis Wanner"
+    }
+  ]
+}

@@ -1,14 +1,27 @@
 <template>
 	<div class="item">
-		<span style="position:relative;bottom:120px;" :id="'p'+post.id"></span>
-		<b>{{ post.name }}</b> <i v-if="post.you">(You)</i> <span>{{ post.date }}</span> <span>{{ post.time }}</span> No.
-		<a href="#comments" style="color:white;cursor:pointer" class="num" @click="$parent.quote(post.id)">{{ post.id }}</a>
+		<span style="position:relative;bottom:130px;" :id="'p'+post.id"></span>
+		<b>
+			<a v-if="post.email && post.email != 'null' && post.email != 'sage'" :href="'mailto:'+post.email" :class="post.trip ? 'trip' : ''">{{ post.name }}<span v-if="post.trip" style="font-weight:100">!{{ post.trip }}</span></a>
+			<span v-else :class="post.trip ? 'trip' : ''">{{ post.name }}<span style="font-weight:100" v-if="post.trip">!{{ post.trip }}</span></span>
+		</b>
+		<i v-if="post.you">(You)</i>
+		<b v-if="post.poster_rank > 0" style="color:yellow">{{ post.rank_flare }}</b>
+		<b v-if="post.email == 'sage'" style="color:red">SAGE!</b> <span>{{ post.date }}</span> <span>{{ post.time }}</span> No.
+		<a :href="'#p'+post.id" style="color:white;cursor:pointer" class="num" @click.prevent="$parent.quote(post.id)">{{ post.id }}</a>
 		<br/>
 		<p v-html="process(post.text)"></p>
+		<span v-if="post.ban_text" class="ban">({{ post.ban_text }})</span>
+		<div v-if="$root.rank > 0 && !post.you" class="mod-tools">
+			<button v-if="!post.ban_text" @click="ban(post)">Ban Poster</button> <button @click="banDelete(post)">Ban Poster and Delete Post</button>
+		</div>
 	</div>
 </template>
 
 <script>
+import { apiUrl } from '../../constants.js';
+import { api } from '../../utils.js';
+
 export default {
 	name: 'Post',
 	props: ['post'],
@@ -37,7 +50,63 @@ export default {
 			}
 
 			return txt;
+		},
+		ban(post) {
+			let reason = prompt("Ban reason");
+			let text = prompt("Ban text", "User was banned for this post");
+			
+			api.post(apiUrl+'ban', {
+				comment_id: post.id,
+				reason: reason,
+				ban_text: text
+			}).then(r => {
+				if(r.status == "success") {
+					post.ban_text = text;
+				} else if(r.status == "error") {
+					alert("API returned error: "+r.error);
+				} else {
+					alert("API returned unknown status: "+r.status);
+					console.log("API returned unknown status");
+					console.error(r);
+				}
+			});
+		},
+		banDelete(post) {
+			let reason = prompt("Ban reason");
+			
+			var vm = this;
+			api.post(apiUrl+'ban', {
+				comment_id: post.id,
+				reason: reason,
+				delete: true
+			}).then(r => {
+				if(r.status == "success") {
+					for(let i = 0; i < vm.$parent.comments.length; i++) {
+						if(vm.$parent.comments[i] === post) {
+							vm.$parent.comments.splice(i, 1);
+						}
+					}
+				} else if(r.status == "error") {
+					alert("API returned error: "+r.error);
+				} else {
+					alert("API returned unknown status: "+r.status);
+					console.log("API returned unknown status");
+					console.error(r);
+				}
+			});
 		}
 	}
 }
 </script>
+
+<style scoped>
+	.trip {
+		color: green;
+	}
+	.ban {
+		font-size: 20px;
+		font-weight: bold;
+		color: red;
+		text-transform: uppercase;
+	}
+</style>

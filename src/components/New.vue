@@ -13,31 +13,36 @@
 				<select name="type" v-model="type">
 					<option value="text">Plain text</option>
 					<option value="html">HTML</option>
+					<option value="markdown">Markdown</option>
 				</select>
 				<i v-if="type == 'text'">
 					Viewable as plain text
 				</i>
-				<i v-else>
+				<i v-else-if="type == 'html'">
 					Viewable as an HTML page and plain text
 				</i>
-				<br/><br/>
-				<label for="visibiliy">Visibility: </label>
-				<select name="visibility" v-model="visibility">
-					<option value="public">Public</option>
-					<option value="private">Private</option>
-				</select>
-				<i v-if="visibility == 'public'">
-					Will be listed on the <router-link to="/public">public posts</router-link> page
-				</i>
 				<i v-else>
-					Will only be available via a link
+					Viewable as markdown (on view page or via link) and plain text
 				</i>
+				<br/><br/>
+				<label for="category">Category: </label>
+				<select name="category" v-model="category">
+					<template v-for="cat in categories">
+						<option :value="cat.id">{{cat.name}}</option>
+					</template>
+				</select>
+				<i>{{cat(category).description}}</i>
 				<br/><br/>
 				Posting content on the site means you agree to its <router-link to="/content">content policy</router-link>. Please read it before posting.<br/>
 				<i>TL;DR Nothing illegal under United States law.</i>
 			</div>
 			<br/><br/>
-			<input type="submit" value="Waiting for posting status..." ref="submit" disabled>
+			<input v-if="!$root.banned" type="submit" value="Waiting for posting status..." ref="submit" disabled>
+			<template v-else>
+				<input type="submit" value="Your IP address is banned" ref="submit" disabled>
+				<br><br>
+				<router-link to="/ban">View ban info</router-link>
+			</template>
 		</form>
 	</center>
 </template>
@@ -51,9 +56,10 @@ export default {
 	data() {
 		return {
 			type: "text",
-			visibility: "public",
+			category: -1,
 			loaded: false,
-			remaining: -1
+			remaining: -1,
+			categories: []
 		}
 	},
 	methods: {
@@ -62,7 +68,7 @@ export default {
 				let name = this.$refs.name.value;
 				let text = this.$refs.text.value;
 				let type = this.type;
-				let visibility = this.visibility;
+				let category = this.category;
 				
 				if(text.length < 1) {
 					alert("Please enter some text to post");
@@ -72,29 +78,51 @@ export default {
 						name: name,
 						text: text,
 						type: type,
-						visibility: visibility
+						category: category
 					}).then(r => {
 						if(r.status == "success") {
-							this.$root.$router.push("/view/"+r.post_id);
+							if(this.category > -1) {
+								this.$root.$router.push('/'+this.cat(this.category).code+'/'+r.post_id);
+							} else {
+								this.$root.$router.push("/view/"+r.post_id);
+							}
 						} else if(r.status == "error") {
-							alert("API returned error while posting: "+r.error);
+							if(r.error == "banned") {
+								alert("Your IP address is banned!");
+							} else {
+								alert("API returned error while posting: "+r.error);
+								this.$refs.submit.value = "Post";
+							}
 						} else {
 							console.error("API returned error");
 							console.error(r);
 							alert("Unknown error occurred while posting");
+							this.$refs.submit.value = "Post";
 						}
 					});
 				}
 			} else {
 				alert("Waiting for posting status from server");
 			}
+		},
+		cat(id) {
+			let cat = "";
+			for(let i = 0; i < this.categories.length; i++) {
+				if(this.categories[i].id == id) {
+					cat = this.categories[i];
+					break;
+				}
+			}
+			
+			return cat;
 		}
 	},
 	mounted() {
 		var vm = this;
-		api.get(apiUrl+"post_limit").then(r => {
+		api.get(apiUrl+"post_status").then(r => {
 			if(r.status == "success") {
 				vm.remaining = r.remaining;
+				vm.categories = r.categories;
 				if(r.remaining > 0) {
 					vm.$refs.submit.disabled = false;
 					vm.$refs.submit.value = "Post";
@@ -102,6 +130,20 @@ export default {
 					vm.$refs.submit.value = "You must wait for a post to expire before posting again";
 				}
 				vm.loaded = true;
+				
+				// Set category if route param present
+				if(this.$route.params.category) {
+					for(let i = 0; i < this.categories.length; i++) {
+						let cat = this.categories[i];
+						if(cat.code == this.$route.params.category) {
+							this.category = cat.id;
+							break;
+						}
+					}
+					if(this.category < 0) {
+						this.$router.push("/new");
+					}
+				}
 			} else if(r.status == "error") {
 				vm.$refs.submit.value = "API returned error: "+r.error;
 			} else {

@@ -4,13 +4,14 @@
       <router-link to="/home"><h1>{{ name }}</h1></router-link>
       <div>
         <span><router-link to="/new">New</router-link></span>
-        <span><router-link to="/public">Public Posts</router-link></span>
+        <span><router-link to="/public">Boards</router-link></span>
       </div>
     </div>
     <div id="content">
       <router-view/>
     </div>
     <div id="footer"><center>
+      <router-link to="/faq">FAQ</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/privacy">Privacy Policy</router-link> |
       <router-link to="/source">Source Code</router-link> |
@@ -20,7 +21,8 @@
 </template>
 
 <script>
-import { serviceName } from './constants';
+import { serviceName, apiUrl } from './constants';
+import { api } from './utils';
 
 document.title = serviceName;
 
@@ -28,7 +30,7 @@ export default {
   name: 'App',
   data() {
     return {
-      name: serviceName
+      name: serviceName,
     }
   }
 }
@@ -62,7 +64,7 @@ button, input[type="submit"] {
 hr {
   border: 1px solid white;
 }
-textarea, input[type="text"] {
+textarea, input[type="text"], input[type="password"] {
 	background: rgb(20, 20, 20);
 	border: 2px solid rgb(70, 70, 70);
 	color: white;
@@ -70,6 +72,12 @@ textarea, input[type="text"] {
 }
 textarea {
   width: calc(80vw - 25px);
+}
+table {
+	border-collapse: collapse;
+}
+td, th {
+	border: 1px solid gray;
 }
 
 .para {
@@ -82,7 +90,28 @@ textarea {
 	display: inline-block;
 	max-width: 350px;
 	margin: 20px;
-  box-shadow: 0px 3px 10px black;
+    box-shadow: 0px 3px 10px black;
+}
+.item div {
+	text-align: left;
+}
+.error, .success {
+	padding: 20px;
+	display: inline-block;
+	box-shadow: 0px 0px 10px black;
+	font-weight: bold;
+}
+.error a, .success a {
+	color: white;
+}
+.error {
+	background: red;
+}
+.success {
+	background: green;
+}
+.sticky {
+	filter: invert(100%);
 }
 
 #content {

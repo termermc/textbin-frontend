@@ -15,9 +15,9 @@
 			We will use this information to display content on the site, and reduce spam and service abuse.<br/>
 			<br/>
 			<b>Data retention</b><br/>
-			All data submitted through the website will be kept for a maximum of twenty-four (24) hours, after which it will be permanently deleted.<br/>
+			All data submitted through the website will be kept for a maximum of seven (7) days, after which it will be permanently deleted.<br/>
 			<br/>
-			If you feel that we are not abiding by this privacy policy, you should contact us immediately via email at termer{{ '@' }}{{ 'protonmail' }}.{{ 'com' }}<br/>
+			If you feel that we are not abiding by this privacy policy, you should contact the owner via email at termer{{ '@' }}{{ 'protonmail' }}.{{ 'com' }}<br/>
 		</p>
 	</div>
 </template>

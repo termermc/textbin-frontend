@@ -6,4 +6,4 @@ export const repoRoot = "https://github.com/termermc/";
 export const repoFrontend = "textbin-frontend";
 export const repoBackend = "textbin-backend";
 
-export const apiUrl = "http://localhost:8090/api/v1/";
+export const apiUrl = "http://localhost:8090/api/v2/";
