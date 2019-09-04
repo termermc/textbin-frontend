@@ -10,7 +10,13 @@
 		<b v-if="post.email == 'sage'" style="color:red">SAGE!</b> <span>{{ post.date }}</span> <span>{{ post.time }}</span> No.
 		<a :href="'#p'+post.id" style="color:white;cursor:pointer" class="num" @click.prevent="$parent.quote(post.id)">{{ post.id }}</a>
 		<br/>
-		<p v-html="process(post.text)"></p>
+		<template v-if="post.text.length <= 1000 || expanded">
+			<p v-html="process(post.text)"></p>
+			<a v-if="post.text.length > 1000" href="javascript:;" @click="expanded = false">Collapse reply</a>
+		</template>
+		<template v-else>
+			<p v-html="process(limit(post.text))"></p><a href="javascript:;" @click="expanded = true">Expand reply</a>
+		</template>
 		<span v-if="post.ban_text" class="ban">({{ post.ban_text }})</span>
 		<div v-if="$root.rank > 0 && !post.you" class="mod-tools">
 			<button v-if="!post.ban_text" @click="ban(post)">Ban Poster</button> <button @click="banDelete(post)">Ban Poster and Delete Post</button>
@@ -25,7 +31,20 @@ import { api } from '../../utils.js';
 export default {
 	name: 'Post',
 	props: ['post'],
+	data() {
+		return {
+			expanded: false
+		}
+	},
 	methods: {
+		limit(str) {
+			// Limit string to 20 characters
+			let val = str;
+			if(val.length > 1000) {
+				val = val.substr(0, 1000-3)+'...';
+			}
+			return val;
+		},
 		process(text) {
 			let txt = "";
 			text = text
