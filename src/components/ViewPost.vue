@@ -47,7 +47,7 @@
 					</tr>
 					<tr>
 						<td>Comment</td>
-						<td><textarea maxlength="1000" name="comment" placeholder="Write a comment..." id="comment" ref="comment"></textarea></td>
+						<td><textarea maxlength="524288" name="comment" placeholder="Write a comment..." id="comment" ref="comment"></textarea></td>
 					</tr>
 					<tr>
 						<td>Captcha</td>
